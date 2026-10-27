@@ -1,4 +1,4 @@
-const BASE = 'https://online-quiz-application-v2yn.onrender.com/api';
+const BASE = 'https://online-quiz-application-h4lj.onrender.com/api';
 
 export const api = {
   createQuiz: (title) =>
