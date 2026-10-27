@@ -1,7 +1,7 @@
 // pages/CreateQuiz.jsx
 import { useState } from 'react';
 import { api } from '../Backend/api';
-
+import { useNavigate } from 'react-router';
 const emptyQuestion = {
   question_text: '',
   option_a: '',
@@ -12,6 +12,7 @@ const emptyQuestion = {
 };
 
 export default function CreateQuiz() {
+    const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [quizId, setQuizId] = useState(null);
   const [question, setQuestion] = useState(emptyQuestion);
@@ -238,7 +239,7 @@ export default function CreateQuiz() {
 
         {/* Finish button */}
         <button
-          onClick={() => (window.location.href = `/quiz/${quizId}`)}
+          onClick={() => navigate(`/quiz/${quizId}`)}
           disabled={added.length === 0}
           className={`w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl
             font-semibold text-white shadow-lg transition-all
