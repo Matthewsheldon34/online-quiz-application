@@ -1,19 +1,24 @@
 const express = require('express');
 const app = express();
 const db = require('./db.cjs');
-const cors=require('cors')
+const cors = require('cors');
+
 app.use(express.json());
 
 app.use(cors({
-  origin:['http://localhost:5173','https://matthewsheldon34.github.io'
-],
-  methods:["POST",'GET','PUT','DELETE'],
-  credentials:true
-}))
-// routes
-app.get('/', ( req,res) => {
+  origin: [
+    'http://localhost:5173',
+    'https://matthewsheldon34.github.io'
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
+
+// Health check
+app.get('/', (req, res) => {
   res.send('Backend is running!');
 });
+
 // Create a new quiz
 app.post('/api/quizzes', (req, res) => {
   const { title } = req.body;
@@ -21,7 +26,7 @@ app.post('/api/quizzes', (req, res) => {
   res.status(201).json({ quizId: result.lastInsertRowid });
 });
 
-// Add a question to a quiz
+// Add a question to a quiz  ← fixed: /api prefix added
 app.post('/api/quizzes/:id/questions', (req, res) => {
   const { question_text, option_a, option_b, option_c, option_d, correct_option } = req.body;
   db.prepare(`
@@ -70,7 +75,5 @@ app.post('/api/quizzes/:id/submit', (req, res) => {
   res.json({ score, correct, total, review });
 });
 
-
-// Start server — OUTSIDE all routes
-const PORT = process.env.PORT || 'https://online-quiz-application-h4lj.onrender.com/';
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
